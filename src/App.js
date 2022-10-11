@@ -1,8 +1,10 @@
 import { useState } from "react"
 
+
 function App() {
   const [calc,setCalc] = useState('')
   const [result,setResult]=useState('')
+  const [history,setHistory] = useState('')
 
   const ops = ['/','*','+','-','.']
 
@@ -15,10 +17,12 @@ function App() {
       return
     }
     setCalc(calc+value)
+   
 
     if(!ops.includes(value)){
       setResult(eval(calc+value).toString())
     }
+    
   }
 
   const createDigits = ()=>{
@@ -47,7 +51,10 @@ function App() {
 
   const finish =  ()=>{
     setCalc(eval(calc).toString())
+    let date = new Date()
+    setHistory(result + " "+ date.getHours()+":"+ date.getMinutes()+":"+date.getSeconds())
   }
+  
 
   return (
     <div className="App">
@@ -72,8 +79,8 @@ function App() {
            <button onClick={finish}>=</button>
       </div>
       </div>
-      <div>История: {result ? <span>{result}</span> : ''}</div>
-
+      <div>История:{history}</div>
+      
       
     </div>
   );
